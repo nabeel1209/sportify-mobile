@@ -273,3 +273,89 @@
                     },
             ```
             pada `InkWell` untuk mendefinisikan fungsi yang berguna untuk memunculkan `SnackBar` dengan pesan 'Kamu telah menekan tombol ${item.name}!' (item.name merupakan atribut yang dimiliki `ItemHomePage`) saat button ditekan. 
+
+# Tugas 8: Flutter Navigation, Layouts, Forms, and Input Elements
+- Apa kegunaan `const` di Flutter? Jelaskan apa keuntungan ketika menggunakan `const` pada kode Flutter. Kapan sebaiknya kita menggunakan `const`, dan kapan sebaiknya tidak digunakan?
+    Di Flutter, `const` digunakan untuk mendeklarasikan objek atau widget sebagai compile-time constant. Artinya, objek tersebut dihitung atau dibuat saat kompilasi dan tidak perlu diinisialisasi ulang setiap kali aplikasi dijalankan. Hal ini sangat berguna terutama untuk widget yang tidak berubah, karena memungkinkan Flutter untuk mengoptimalkan performa aplikasi. Variabel `const` harus diinisialisasi dengan nilai yang sudah diketahui saat *compile time*. Dengan kata lain, nilainya harus benar-benar konstan dan tidak dapat bergantung pada perhitungan atau nilai yang hanya tersedia di runtime.
+    - **Keuntungan Menggunakan `const` di Flutter**
+        - **Penghematan Memori:** Objek yang dideklarasikan sebagai const hanya dibuat sekali dalam memori. Jika objek yang sama digunakan berkali-kali, Flutter akan merujuk pada objek yang sama daripada membuat duplikat, sehingga menghemat memori.
+        - **Optimisasi oleh Flutter**: Flutter menggunakan optimisasi pada widget const. Jika sebuah widget ditandai sebagai const, Flutter tidak akan merender ulang widget tersebut kecuali benar-benar diperlukan. Hal ini mempercepat proses rendering UI.
+    - **Kapan Sebaiknya Menggunakan `const`**
+        - **Widget Stateless atau yang Tidak Berubah**: Jika widget tidak akan berubah setelah dibuat, gunakan `const` untuk mendeklarasikannya. Misalnya, pada widget seperti `Text`, `Icon`, atau `Padding` yang menggunakan nilai tetap.
+        - **Nilai Konstan**: Gunakan `const` untuk mendeklarasikan nilai konstan yang tidak berubah selama runtime, seperti warna, ukuran, atau string yang tetap.
+        - **Dalam Constructor Widget**: Saat membuat widget yang dapat menerima nilai konstan, seperti `Container` yang memiliki nilai `color`, `width`, dan `height` yang tetap.
+    - **Kapan Sebaiknya Tidak Menggunakan `const`**
+        - **Nilai atau Objek Dapat Berubah**: Jika Anda memiliki widget atau variabel yang bergantung pada input pengguna atau nilai lain yang berubah selama runtime, maka tidak disarankan untuk menggunakan `const`.
+        - **Nilai Tidak Diketahui saat Compile-Time**: Jika nilai baru diketahui saat aplikasi berjalan (runtime), misalnya dari API atau input pengguna, Anda tidak bisa menggunakan `const`. `const` hanya bekerja dengan nilai yang diketahui saat kompilasi.
+- Jelaskan dan bandingkan penggunaan *Column* dan *Row* pada Flutter. Berikan contoh implementasi dari masing-masing layout widget ini!
+    -  `Column` digunakan untuk menempatkan widget secara vertikal (atas ke bawah)
+        Contoh Implementasi :
+        ```dart
+        Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+                Text('Hello,'),
+                Text('Welcome to Flutter!'),
+                Icon(Icons.thumb_up, color: Colors.blue),
+            ],
+        )
+        ``` 
+    -  `Row` digunakan untuk menempatkan widget secara horizontal (kiri ke kanan)
+        Contoh Implementasi :
+        ```dart
+        Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+                Icon(Icons.home, color: Colors.red),
+                Icon(Icons.star, color: Colors.yellow),
+                Icon(Icons.person, color: Colors.green),
+            ],
+        )
+        ``` 
+- Sebutkan apa saja elemen input yang kamu gunakan pada halaman *form* yang kamu buat pada tugas kali ini. Apakah terdapat elemen input Flutter lain yang tidak kamu gunakan pada tugas ini? Jelaskan!
+    Saya menggunakan `TextFormField` sebagai input pada halaman *form* yang saya buat. Berikut adalah beberapa elemen input pada flutter yang saya ketahui.
+    - `TextField` dan `TextFormField`: Untuk input teks atau angka sederhana (seperti nama, alamat, atau nomor telepon).
+    - `Checkbox` atau `Switch`: Untuk memilih antara dua opsi (ya/tidak (`Checkbox`), aktif/nonaktif (`Switch`)).
+    - `Radio`: Untuk memilih satu opsi dari beberapa pilihan.
+    - `DropdownButton`: Untuk memilih satu dari beberapa opsi dalam bentuk dropdown.
+    - `Slider` dan `RangeSlider`: Untuk input nilai yang berkisar (misalnya, volume atau tingkat kecerahan).
+    - `DatePicker` dan `TimePicker`: Untuk input tanggal dan waktu.
+
+- Bagaimana cara kamu mengatur tema (*theme*) dalam aplikasi Flutter agar aplikasi yang dibuat konsisten? Apakah kamu mengimplementasikan tema pada aplikasi yang kamu buat?
+    Mengatur tema dalam Flutter adalah cara yang efektif untuk menjaga konsistensi tampilan di seluruh aplikasi. Dengan menggunakan `ThemeData`, kita bisa mengatur warna, font, ukuran teks, gaya tombol, dan elemen UI lainnya secara konsisten.
+    Cara mengaturnya adalah dengan menambahkan value pada atribut theme pada `MaterialApp` yang ada pada `main.dart`.
+    ```dart
+    theme: ThemeData(
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          primary: const Color(0xFF3C844B), 
+          secondary: const Color.fromARGB(255, 18,18,18)
+        ),
+        useMaterial3: true,
+    )
+    ```
+- Bagaimana cara kamu menangani navigasi dalam aplikasi dengan banyak halaman pada Flutter?
+    Menggunakan class `Navigator` dengan `static` `function` yaitu,
+    - `push()` : Menambahkan layar baru ke tumpukan navigasi, sehingga pengguna diarahkan ke halaman baru.
+    - `pushReplacement()` : Mengganti halaman saat ini dengan halaman baru, menghapus halaman saat ini dari tumpukan.
+    - `pushNamed()` : Mengganti halaman saat ini dengan halaman baru, menghapus halaman saat ini dari tumpukan.
+    - `pop()` : Menghapus (mengeluarkan) halaman paling atas dari tumpukan, sehingga kembali ke halaman sebelumnya.
+    - `pushAndRemoveUntil()` : Mendorong halaman baru ke tumpukan dan menghapus semua halaman di tumpukan hingga kondisi tertentu terpenuhi.
+    Dalam tugas ini saya menggunakan beberapa navigasi yaitu,
+    ```dart
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ProductEntryFormPage(),
+        )
+    );
+    ```
+    ```dart
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ProductEntryFormPage(),
+        )
+    );
+    ```

@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:sportify_mobile/widgets/left_drawer.dart';
+import 'package:sportify_mobile/widgets/product_card.dart';
+
 class MyHomePage extends StatelessWidget {
   final List<ItemHomepage> items = [
     ItemHomepage("Lihat Daftar Produk", HugeIcon(
-  icon: HugeIcons.strokeRoundedPackage,
-  color: Colors.black,
-  size: 24.0,
-)),
+      icon: HugeIcons.strokeRoundedPackage,
+      color: Colors.black,
+      size: 24.0,
+    )),
     ItemHomepage("Tambah Produk", HugeIcon(
-  icon: HugeIcons.strokeRoundedAddCircle,
-  color: Colors.black,
-  size: 24.0,
-)),
+      icon: HugeIcons.strokeRoundedAddCircle,
+      color: Colors.black,
+      size: 24.0,
+    )),
     ItemHomepage("Logout", HugeIcon(
-  icon: HugeIcons.strokeRoundedLogout03,
-  color: Colors.black,
-  size: 24.0,
-)),
+      icon: HugeIcons.strokeRoundedLogout03,
+      color: Colors.black,
+      size: 24.0,
+    )),
   ];
   final List<Color> colors = [
     Color(0XFF8CD867),
@@ -32,6 +35,7 @@ class MyHomePage extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.secondary,
       // AppBar adalah bagian atas halaman yang menampilkan judul.
       appBar: AppBar(
+        centerTitle: true,
         title: const Text(
           'Sportify',
           style: TextStyle(
@@ -45,6 +49,7 @@ class MyHomePage extends StatelessWidget {
           borderRadius: BorderRadius.circular(100)
         ),
       ),
+      drawer: const LeftDrawer(),
       // Body halaman dengan padding di sekelilingnya.
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -94,60 +99,3 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-class ItemHomepage {
-     final String name;
-     final HugeIcon icon;
-
-     ItemHomepage(this.name, this.icon);
-}
-
-class ItemCard extends StatelessWidget {
-  // Menampilkan kartu dengan ikon dan nama.
-
-  final ItemHomepage item; 
-  final Color color; 
-  
-  const ItemCard(this.item, this.color, {super.key}); 
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      // Menentukan warna latar belakang dari tema aplikasi.
-      color: color,
-      // Membuat sudut kartu melengkung.
-      borderRadius: BorderRadius.circular(12),
-      
-      child: InkWell(
-        // Aksi ketika kartu ditekan.
-        onTap: () {
-          // Menampilkan pesan SnackBar saat kartu ditekan.
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(content: Text("Kamu telah menekan tombol ${item.name}!"))
-            );
-        },
-        borderRadius: BorderRadius.circular(12),
-        // Container untuk menyimpan Icon dan Text
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          child: Center(
-            child: Column(
-              // Menyusun ikon dan teks di tengah kartu.
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                item.icon,
-                const Padding(padding: EdgeInsets.all(3)),
-                Text(
-                  item.name,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Theme.of(context).colorScheme.secondary),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
