@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sportify_mobile/screens/list_productentry.dart';
 import 'package:sportify_mobile/screens/menu.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:sportify_mobile/screens/productentry_form.dart';
@@ -67,6 +68,21 @@ class LeftDrawer extends StatelessWidget {
                     builder: (context) => ProductEntryFormPage(),
                 )
               );
+            },
+          ),
+          ListTile(
+            leading: const HugeIcon(
+              icon: HugeIcons.strokeRoundedPackage,
+              color: Colors.white,
+              size: 24.0,
+            ),
+            title: const Text('Daftar Produk', style: TextStyle(color: Colors.white)),
+            onTap: () {
+                // Route menu ke halaman mood
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ProductEntryPage()),
+                );
             },
           ),
         ],
